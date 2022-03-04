@@ -21356,12 +21356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios.get(route('api.user'), {
-                headers: {
-                  Authorization: "Bearer ".concat(localStorage.getItem('access_token')),
-                  "Content-Type": "application/json"
-                }
-              }).then(function (res) {
+              return axios.get(route('api.user')).then(function (res) {
                 console.log(res);
                 _this.name = res.data.name;
               })["catch"](function (err) {
@@ -21383,21 +21378,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // post時はこの書き方でないと401エラーになる
-                axios.defaults.headers.common['Authorization'] = "Bearer ".concat(localStorage.getItem('access_token'));
-                _context2.next = 3;
-                return axios.post(route('api.logout'), {
-                  headers: {
-                    "Content-Type": "application/json"
-                  }
-                }).then(function (res) {
+                _context2.next = 2;
+                return axios.post(route('api.logout')).then(function (res) {
                   console.log(res);
                   localStorage.removeItem('access_token');
                 })["catch"](function (err) {
                   console.log(err);
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -21411,12 +21400,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                axios.get(route('api.value'), {
-                  headers: {
-                    Authorization: "Bearer ".concat(localStorage.getItem('access_token')),
-                    "Content-Type": "application/json"
-                  }
-                }).then(function (res) {
+                axios.get(route('api.value')).then(function (res) {
                   console.log(res);
                 })["catch"](function (err) {
                   console.log(err);
@@ -26129,7 +26113,10 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // add Token Info
+
+window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(localStorage.getItem('access_token'));
+window.axios.defaults.headers.common['Content-Type'] = "application/json";
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

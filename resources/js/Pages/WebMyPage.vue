@@ -26,12 +26,7 @@
             }
         },
         async mounted(){
-            await axios.get(route('api.user'), {
-                headers:{
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                    "Content-Type": "application/json",   
-                }
-            })
+            await axios.get(route('api.user'))
             .then( res => {
                 console.log(res);
                 this.name = res.data.name;
@@ -42,13 +37,7 @@
         },
         methods: {
             async logout(){
-                // post時はこの書き方でないと401エラーになる
-                axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-                await axios.post(route('api.logout'), {
-                    headers:{
-                        "Content-Type": "application/json",                        
-                    }
-                })
+                await axios.post(route('api.logout'))
                 .then( res => {
                     console.log(res);
                     localStorage.removeItem('access_token');
@@ -58,12 +47,7 @@
                 })
             },
             async getValue(){
-                axios.get(route('api.value'), {
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                        "Content-Type": "application/json",   
-                    }
-                })
+                axios.get(route('api.value'))
                 .then( res => {
                     console.log(res);
                 })
