@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +16,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
 
-Route::get('/view', function () {
-    return view('sampleform');
-});
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
 
-Route::get('/example', [\App\Http\Controllers\ExampleController::class, 'example']);
 
-Route::post('/example/store', [\App\Http\Controllers\ExampleController::class, 'storeSample']);
+// LoginView
+Route::get('/web/login', function() {
+    return Inertia::render('WebLogin');
+})->name('weblogin');
+
+Route::get('/web/mypage', function() {
+    return Inertia::render('WebMyPage');
+})->name('web.mypage');
+

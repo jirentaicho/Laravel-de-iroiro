@@ -45,15 +45,6 @@ abstract class MaruValidation {
         return $maruResult;
     }
 
-    /** 
-     * Only variables should be passed by reference
-    private function mergeResult(MaruRule $rule, MaruResult $result)
-    {
-        // メッセージを追加する
-        array_push($result->getMessages(), $rule->getMessages());
-    }
-    */
-
     public function addRule(MaruRule $rule)
     {
         if($this->rules === null){
@@ -77,6 +68,5 @@ abstract class MaruValidation {
         },$rules);
 
     }
-
     
 }
